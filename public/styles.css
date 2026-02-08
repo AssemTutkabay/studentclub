@@ -1,0 +1,270 @@
+:root{
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --text:#101828;
+    --muted:#667085;
+    --border:#eaecf0;
+    --shadow: 0 10px 30px rgba(16,24,40,0.08);
+    --shadow-soft: 0 2px 10px rgba(16,24,40,0.06);
+
+    /* default accent (override per club) */
+    --accent:#3b82f6;
+    --accent-weak: rgba(59,130,246,0.14);
+    --accent-strong:#2563eb;
+
+    --radius: 14px;
+    --radius-sm: 12px;
+
+    --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+    margin:0;
+    font-family: var(--font);
+    color: var(--text);
+    background:
+            radial-gradient(1200px 600px at 15% -10%, var(--accent-weak), transparent 50%),
+            radial-gradient(1000px 500px at 90% 0%, rgba(16,24,40,0.06), transparent 55%),
+            var(--bg);
+}
+
+a{ color: inherit; }
+.container{
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 26px 16px 60px;
+}
+
+h1,h2,h3{ margin: 0 0 12px; letter-spacing:-0.02em; }
+p{ margin: 8px 0; }
+.small{ font-size: 14px; color: var(--muted); }
+
+/* ===== Topbar ===== */
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom: 16px;
+}
+
+.actions{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+/* ===== Cards ===== */
+.card{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 16px;
+}
+
+/* Compact card used for lists */
+.item{
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(16,24,40,0.05);
+}
+
+/* ===== Grid ===== */
+.grid{
+    display:grid;
+    gap: 14px;
+}
+.grid-3{
+    grid-template-columns: repeat(3, minmax(0,1fr));
+}
+.grid-2{
+    grid-template-columns: repeat(2, minmax(0,1fr));
+}
+@media (max-width: 900px){
+    .grid-3{ grid-template-columns: 1fr; }
+    .grid-2{ grid-template-columns: 1fr; }
+}
+
+/* ===== Buttons / Inputs ===== */
+input, select, textarea, button{
+    font: inherit;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    outline: none;
+    background: #fff;
+}
+
+textarea{ min-height: 110px; resize: vertical; }
+
+button{
+    cursor: pointer;
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+    font-weight: 650;
+    transition: transform 0.06s ease, filter 0.12s ease;
+}
+button:hover{ filter: brightness(0.98); }
+button:active{ transform: translateY(1px); }
+
+button.secondary{
+    background: #fff;
+    color: var(--text);
+    border-color: var(--border);
+}
+button.secondary:hover{
+    border-color: rgba(16,24,40,0.18);
+}
+
+button.danger{
+    background: #b00020;
+    border-color: #b00020;
+}
+
+/* Make buttons in topbar not stretch full width */
+.actions button{
+    width: auto;
+}
+
+/* ===== Messages ===== */
+.msg{
+    padding: 12px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #fff;
+    margin-bottom: 12px;
+}
+.msg.ok{ border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.08); }
+.msg.bad{ border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.08); }
+
+/* ===== Badges ===== */
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-size: 12px;
+    color: var(--muted);
+}
+.badge.accent{
+    border-color: rgba(0,0,0,0);
+    background: var(--accent-weak);
+    color: var(--accent-strong);
+    font-weight: 650;
+}
+
+/* ===== Club cards (Home) ===== */
+.clubCard{
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+}
+.clubCard .cover{
+    height: 120px;
+    background:
+            linear-gradient(120deg, rgba(255,255,255,0.0), rgba(255,255,255,0.15)),
+            radial-gradient(700px 220px at 10% 10%, var(--accent-weak), transparent 60%),
+            radial-gradient(500px 180px at 90% 20%, rgba(16,24,40,0.08), transparent 55%),
+            #ffffff;
+    border-bottom: 1px solid var(--border);
+}
+.clubCard .content{
+    padding: 16px;
+}
+.clubCard .title{
+    font-weight: 750;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+.clubCard .desc{
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.35;
+    margin-bottom: 12px;
+}
+
+/* ===== Hero (Club page) ===== */
+.hero{
+    position: relative;
+    overflow: hidden;
+    padding: 18px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background:
+            radial-gradient(900px 420px at 10% 0%, var(--accent-weak), transparent 55%),
+            radial-gradient(900px 420px at 95% 10%, rgba(16,24,40,0.08), transparent 60%),
+            #fff;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+}
+.hero .row{
+    display:flex;
+    gap: 16px;
+    align-items: stretch;
+}
+.hero .left{ flex: 1; min-width: 240px; }
+.hero .right{
+    width: 280px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background:
+            radial-gradient(700px 280px at 20% 10%, var(--accent-weak), transparent 60%),
+            #fff;
+}
+@media (max-width: 900px){
+    .hero .row{ flex-direction: column; }
+    .hero .right{ width: 100%; height: 160px; }
+}
+
+.heroTitle{
+    font-size: 28px;
+    font-weight: 850;
+    margin: 0 0 10px;
+}
+.heroMeta{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+/* ===== Lists ===== */
+.list{ display:grid; gap: 12px; }
+
+.meta{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    color: var(--muted);
+    font-size: 13px;
+}
+.title{
+    font-weight: 750;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+.desc{ margin-top: 8px; color: #333; }
+
+/* ===== Club theme via body data attribute ===== */
+body[data-club="sports"]{
+    --accent:#22c55e;
+    --accent-weak: rgba(34,197,94,0.16);
+    --accent-strong:#16a34a;
+}
+body[data-club="debate"]{
+    --accent:#3b82f6;
+    --accent-weak: rgba(59,130,246,0.16);
+    --accent-strong:#2563eb;
+}
+body[data-club="music"]{
+    --accent:#a855f7;
+    --accent-weak: rgba(168,85,247,0.16);
+    --accent-strong:#7c3aed;
+}

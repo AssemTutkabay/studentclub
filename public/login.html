@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="container">
+    <div class="topbar">
+        <h1>Login</h1>
+        <div class="actions">
+            <a href="/"><button class="secondary" type="button">Home</button></a>
+            <a href="/register.html"><button class="secondary" type="button">Register</button></a>
+        </div>
+    </div>
+
+    <div id="msg" class="msg" style="display:none;"></div>
+
+    <div class="card">
+        <form id="loginForm">
+            <div class="row">
+                <div>
+                    <label>Email</label>
+                    <input id="email" type="email" required maxlength="120" />
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input id="password" type="password" required minlength="6" maxlength="72" />
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top:14px;">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="module">
+    import { apiFetch, setToken, showMessage, hideMessage, clearToken } from "/app.js";
+
+    clearToken(); // чистим на всякии случаи, чтобы не было "магии"
+
+    const form = document.getElementById("loginForm");
+    const msg = document.getElementById("msg");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        hideMessage(msg);
+
+        const body = {
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+        };
+
+        try {
+            const data = await apiFetch("/api/auth/login", {
+                method: "POST",
+                body: JSON.stringify(body),
+            });
+
+            setToken(data.token);
+            showMessage(msg, "Login successful. Redirecting to dashboard...", true);
+            setTimeout(() => (window.location.href = "/dashboard.html"), 400);
+        } catch (err) {
+            showMessage(msg, err.message || "Login failed", false);
+        }
+    });
+</script>
+</body>
+</html>

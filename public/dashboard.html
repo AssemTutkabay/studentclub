@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="container">
+
+    <!-- Topbar -->
+    <div class="topbar">
+        <div style="display:flex; gap:10px; align-items:center;">
+            <a href="/" style="text-decoration:none;"><button class="secondary" type="button">Home</button></a>
+        </div>
+
+        <div class="actions" id="authActions">
+            <!-- filled by JS -->
+        </div>
+    </div>
+
+    <div id="msg" class="msg" style="display:none;"></div>
+
+    <!-- 1) Profile -->
+    <div class="card">
+        <h2 style="margin-top:0;">My profile</h2>
+
+        <div class="small" id="profileMeta"></div>
+
+        <form id="profileForm" style="margin-top:12px;">
+            <label>Name</label>
+            <input id="name" minlength="2" maxlength="60" placeholder="Your name" />
+            <div class="actions" style="margin-top:12px;">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 2) Joined clubs -->
+    <div class="card">
+        <div class="topbar" style="margin-bottom:8px;">
+            <h2 style="margin:0;">Joined clubs</h2>
+            <button id="refreshProfileBtn" class="secondary" type="button" style="width:auto;">Refresh</button>
+        </div>
+
+        <div id="clubsList" class="list"></div>
+        <p id="clubsEmpty" class="small" style="display:none;">You haven’t joined any clubs yet. Open a club and click Join.</p>
+    </div>
+
+    <!-- 3) My resources -->
+    <div class="card">
+        <div class="topbar" style="margin-bottom:8px;">
+            <h2 style="margin:0;">My resources</h2>
+            <button id="refreshResourcesBtn" class="secondary" type="button" style="width:auto;">Refresh</button>
+        </div>
+
+        <div id="resourcesList" class="list"></div>
+        <p id="resourcesEmpty" class="small" style="display:none;">No resources yet. Create events/posts inside a club page.</p>
+    </div>
+
+</div>
+
+<script type="module" src="/dashboard.js"></script>
+</body>
+</html>

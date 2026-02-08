@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Club</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="container">
+
+    <!-- Topbar -->
+    <div class="topbar">
+        <div style="display:flex; gap:10px; align-items:center;">
+            <a href="/" style="text-decoration:none;"><button class="secondary" type="button">Home</button></a>
+            <a href="/dashboard.html" style="text-decoration:none;"><button class="secondary" type="button">Dashboard</button></a>
+        </div>
+        <div class="actions" id="authActions">
+            <!-- will be filled by JS -->
+        </div>
+    </div>
+
+    <div id="msg" class="msg" style="display:none;"></div>
+
+    <!-- Hero -->
+    <div class="hero" id="hero">
+        <div class="row">
+            <div class="left">
+                <h1 class="heroTitle" id="clubTitle">Loading...</h1>
+                <p class="small" id="clubDesc"></p>
+
+                <div class="heroMeta" id="clubMeta">
+                    <!-- badges here -->
+                </div>
+            </div>
+
+            <div class="right" id="clubCover" aria-hidden="true"></div>
+        </div>
+    </div>
+
+    <!-- Join card -->
+    <div class="card" id="joinCard" style="display:none;">
+        <h2>Join this club</h2>
+        <p class="small" id="joinText">
+            Join to create events/posts. You will only manage your own resources.
+        </p>
+        <div class="actions" style="margin-top:12px;">
+            <button id="joinBtn" type="button">Join</button>
+        </div>
+    </div>
+
+    <!-- Create resource card (hidden until joined) -->
+    <div class="card" id="createCard" style="display:none;">
+        <h2>Create resource</h2>
+        <form id="resourceForm">
+            <div class="row">
+                <div>
+                    <label>Type</label>
+                    <select id="type" required>
+                        <option value="event">event</option>
+                        <option value="post">post</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Title</label>
+                    <input id="title" required minlength="2" maxlength="80" />
+                </div>
+            </div>
+
+            <div style="margin-top:12px;">
+                <label>Description</label>
+                <textarea id="description" maxlength="500" placeholder="Optional"></textarea>
+            </div>
+
+            <!-- event-only fields -->
+            <div class="row" id="eventFields" style="margin-top:12px;">
+                <div>
+                    <label>Date & time</label>
+                    <input id="date" type="datetime-local" />
+                </div>
+                <div>
+                    <label>Location</label>
+                    <input id="location" maxlength="120" placeholder="Gym" />
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top:14px;">
+                <button type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- A) My resources in this club (hidden until joined) -->
+    <div class="card" id="myResources" style="display:none;">
+        <div class="topbar" style="margin-bottom:8px;">
+            <h2 style="margin:0;">My resources in this club</h2>
+            <button id="refreshBtn" class="secondary" type="button" style="width:auto;">Refresh</button>
+        </div>
+
+        <div id="myResourcesList" class="list"></div>
+        <p id="myResourcesEmpty" class="small" style="display:none;">
+            No resources yet. Create your first one.
+        </p>
+    </div>
+
+    <!-- B) Club feed (optional but nice) -->
+    <div class="card" id="clubFeed" style="display:none;">
+        <div class="topbar" style="margin-bottom:8px;">
+            <h2 style="margin:0;">Club feed</h2>
+        </div>
+
+        <div id="clubFeedList" class="list"></div>
+        <p class="small" id="clubFeedEmpty" style="display:none;">No activity yet.</p>
+    </div>
+
+</div>
+
+<script type="module" src="/club.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="container">
+    <div class="topbar">
+        <h1>Register</h1>
+        <div class="actions">
+            <a href="/"><button class="secondary" type="button">Home</button></a>
+            <a href="/login.html"><button class="secondary" type="button">Login</button></a>
+        </div>
+    </div>
+
+    <div id="msg" class="msg" style="display:none;"></div>
+
+    <div class="card">
+        <form id="regForm">
+            <div class="row">
+                <div>
+                    <label>Name</label>
+                    <input id="name" required minlength="2" maxlength="60" />
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input id="email" type="email" required maxlength="120" />
+                </div>
+            </div>
+            <div style="margin-top:12px;">
+                <label>Password</label>
+                <input id="password" type="password" required minlength="6" maxlength="72" />
+            </div>
+
+            <div class="actions" style="margin-top:14px;">
+                <button type="submit">Create account</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="module">
+    import { apiFetch, setToken, showMessage, hideMessage } from "/app.js";
+
+    const form = document.getElementById("regForm");
+    const msg = document.getElementById("msg");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        hideMessage(msg);
+
+        const body = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+        };
+
+        try {
+            const data = await apiFetch("/api/auth/register", {
+                method: "POST",
+                body: JSON.stringify(body),
+            });
+
+            setToken(data.token);
+            showMessage(msg, "Registered successfully. Redirecting to dashboard...", true);
+            setTimeout(() => (window.location.href = "/dashboard.html"), 500);
+        } catch (err) {
+            showMessage(msg, err.message || "Register failed", false);
+        }
+    });
+</script>
+</body>
+</html>
