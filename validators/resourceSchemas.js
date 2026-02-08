@@ -1,10 +1,8 @@
-// validators/resourceSchemas.js
 const Joi = require("joi");
 
 const CLUB_SLUGS = ["sports", "debate", "music"];
 const TYPES = ["event", "post"];
 
-// Базовые поля
 const baseFields = {
     clubSlug: Joi.string().valid(...CLUB_SLUGS),
     type: Joi.string().valid(...TYPES),
@@ -15,7 +13,6 @@ const baseFields = {
     location: Joi.string().min(2).max(120),
 };
 
-// CREATE: обязательные поля + условие для event
 const resourceCreateSchema = Joi.object({
     clubSlug: baseFields.clubSlug.required(),
     type: baseFields.type.required(),
@@ -25,14 +22,12 @@ const resourceCreateSchema = Joi.object({
     date: baseFields.date.optional(),
     location: baseFields.location.optional(),
 })
-    // если event -> date/location обязательны
     .when(Joi.object({ type: Joi.valid("event") }).unknown(), {
         then: Joi.object({
             date: baseFields.date.required(),
             location: baseFields.location.required(),
         }),
     })
-    // если post -> date/location запрещаем (чтобы не было мусора)
     .when(Joi.object({ type: Joi.valid("post") }).unknown(), {
         then: Joi.object({
             date: Joi.forbidden(),
@@ -40,7 +35,6 @@ const resourceCreateSchema = Joi.object({
         }),
     });
 
-// UPDATE: все поля optional, но тело не может быть пустым + та же условная логика
 const resourceUpdateSchema = Joi.object({
     clubSlug: baseFields.clubSlug.optional(),
     type: baseFields.type.optional(),

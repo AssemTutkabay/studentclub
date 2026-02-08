@@ -1,4 +1,4 @@
-// middleware/authMiddleware.js
+
 const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
@@ -14,7 +14,6 @@ module.exports = (req, res, next) => {
         const token = header.split(" ")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // ожидаем, что в токене есть { id: user._id }
         req.user = { id: decoded.id };
 
         return next();

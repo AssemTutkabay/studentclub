@@ -62,13 +62,11 @@ function renderClubs(clubs) {
     clubsEmpty.style.display = (!clubs || clubs.length === 0) ? "block" : "none";
     if (!clubs || clubs.length === 0) return;
 
-    // красиво: на широком экране 3 колонки
     clubsGrid.classList.add("grid-3");
 
     for (const c of clubs) {
         const card = document.createElement("div");
 
-        // FIX: используем твой "дорогой" стиль, а не .club
         card.className = "clubCard";
 
         card.innerHTML = `
@@ -107,7 +105,6 @@ function renderUpdates(list) {
     for (const r of list) {
         const div = document.createElement("div");
 
-        // updates оставляем как простой блок (он уже норм)
         div.className = "item";
 
         div.innerHTML = `

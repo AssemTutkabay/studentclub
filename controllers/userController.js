@@ -1,4 +1,4 @@
-// controllers/userController.js
+
 const User = require("../models/User");
 
 const CLUB_SLUGS = ["sports", "debate", "music"];
@@ -25,7 +25,6 @@ exports.getProfile = async (req, res, next) => {
 };
 
 // PUT /api/users/profile (private)
-// body: { name?: string, joinClubSlug?: "sports"|"debate"|"music" }
 exports.updateProfile = async (req, res, next) => {
     try {
         const userId = req.user?.id;

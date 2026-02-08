@@ -1,8 +1,7 @@
-// controllers/clubController.js
+
 const Club = require("../models/Club");
 
-// GET /api/clubs (public)
-// returns all fixed clubs (sports/debate/music)
+
 exports.getAllClubs = async (req, res, next) => {
     try {
         const clubs = await Club.find({})
@@ -15,8 +14,7 @@ exports.getAllClubs = async (req, res, next) => {
     }
 };
 
-// GET /api/clubs/:slug (public)
-// returns one club by slug
+
 exports.getClubBySlug = async (req, res, next) => {
     try {
         const slug = String(req.params.slug || "").toLowerCase().trim();

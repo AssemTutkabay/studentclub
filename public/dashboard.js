@@ -1,4 +1,4 @@
-// public/dashboard.js
+
 import { apiFetch, getToken, logout, requireAuth, showMessage, hideMessage } from "/app.js";
 
 // ===== Elements =====
@@ -211,7 +211,6 @@ async function refreshResources() {
 // ===== Init =====
 setAuthButtons();
 
-// Dashboard должен быть приватным
 const ok = await requireAuth();
 if (!ok) {
     // requireAuth уже редиректит на login

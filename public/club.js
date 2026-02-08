@@ -1,4 +1,4 @@
-// public/club.js
+
 import { apiFetch, getToken, logout, showMessage, hideMessage, clearToken } from "/app.js";
 
 // ===== Elements =====
@@ -27,7 +27,7 @@ const typeEl = document.getElementById("type");
 const eventFields = document.getElementById("eventFields");
 const refreshBtn = document.getElementById("refreshBtn");
 
-// ===== State (важно: обновляем после join) =====
+// ===== State =====
 let currentUser = null;
 let currentUserId = null;
 let isJoined = false;
@@ -174,7 +174,6 @@ async function createResource(slug) {
 
         body.location = document.getElementById("location").value;
 
-        // Фронтовая проверка, чтобы не ловить тупые 400 (Joi min(2) + required)
         if (!body.date) {
             const err = new Error("Date is required for event");
             err.status = 400;
@@ -193,7 +192,6 @@ async function createResource(slug) {
     });
 }
 
-// A) FINAL: my resources in this club
 async function loadMyResources(slug, currentUserId) {
     const data = await apiFetch("/api/resource", { method: "GET" });
     const mine = Array.isArray(data.resources) ? data.resources : [];
@@ -207,7 +205,6 @@ async function loadMyResources(slug, currentUserId) {
     renderMyResources(mineInThisClub, currentUserId);
 }
 
-// B) joined-only feed
 async function loadClubFeed(slug) {
     const data = await apiFetch(`/api/resource/club/${slug}`, { method: "GET" });
     return Array.isArray(data.resources) ? data.resources : [];
@@ -272,7 +269,6 @@ function renderMyResources(list, currentUserId) {
 
                 const patch = { title: newTitle, description: newDesc };
 
-                // Оставляем ISO через prompt (как ты и хотел), но делаем страховку:
                 if (r.type === "event") {
                     const newDate = prompt("New date (ISO, example: 2026-02-10T10:00:00.000Z):", r.date || "");
                     if (newDate === null) return;
@@ -459,7 +455,6 @@ if (state !== "ok" || !user) {
             try {
                 await joinClub(currentSlug);
 
-                // FIX: обновляем профиль после join, иначе user старый
                 const prof = await apiFetch("/api/users/profile", { method: "GET" });
                 currentUser = prof.user;
                 currentUserId = prof.user._id || prof.user.id || null;
@@ -502,7 +497,6 @@ async function initLoads() {
             clubFeedEmptyEl.style.display = "block";
         }
     } else {
-        // если не joined, чистим все чтобы не было "псевдопусто"
         myResourcesListEl.innerHTML = "";
         myResourcesEmptyEl.style.display = "none";
         clubFeedListEl.innerHTML = "";

@@ -1,5 +1,3 @@
-// public/app.js
-
 const TOKEN_KEY = "jwt_token";
 
 export function setToken(token) {
@@ -41,16 +39,13 @@ export async function apiFetch(path, options = {}) {
 
     const res = await fetch(path, { ...options, headers });
 
-    // пытаемся вытащить json-ошибку от твоего errorHandler
     let data = null;
     try {
         data = await res.json();
     } catch (_) {}
 
     if (res.status === 401) {
-        // токен нет/протух/невалиден
         clearToken();
-        // если мы не на login/register, отправляем на логин
         const p = window.location.pathname;
         if (!p.endsWith("/login.html") && !p.endsWith("/register.html")) {
             window.location.href = "/login.html";
@@ -75,12 +70,10 @@ export async function requireAuth() {
         return false;
     }
 
-    // мягкая проверка, что токен реально работает
     try {
         await apiFetch("/api/users/profile", { method: "GET" });
         return true;
     } catch (e) {
-        // apiFetch сам редиректнет на login при 401
         return false;
     }
 }

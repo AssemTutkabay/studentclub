@@ -1,4 +1,3 @@
-// routes/clubRoutes.js
 const express = require("express");
 const { getAllClubs, getClubBySlug } = require("../controllers/clubController");
 

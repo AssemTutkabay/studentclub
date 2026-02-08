@@ -1,4 +1,4 @@
-// controllers/resourceController.js
+
 const mongoose = require("mongoose");
 const Resource = require("../models/Resource");
 const User = require("../models/User");
@@ -17,7 +17,6 @@ async function getUserJoinedClubs(ownerId) {
     return User.findById(ownerId).select("joinedClubs").lean();
 }
 
-// POST /api/resource (private, required by final)
 exports.create = async (req, res, next) => {
     try {
         const ownerId = req.user?.id;
@@ -29,7 +28,6 @@ exports.create = async (req, res, next) => {
             return next(err);
         }
 
-        // joined check (so random people can't post everywhere)
         const user = await getUserJoinedClubs(ownerId);
         if (!user) {
             const err = new Error("Unauthorized");
@@ -50,8 +48,6 @@ exports.create = async (req, res, next) => {
             description: String(description || "").trim(),
         };
 
-        // keep data consistent with schema defaults:
-        // date default null, location default ""
         if (type === "event") {
             if (date) payload.date = date; // else don't set -> schema default null
             if (location) payload.location = String(location).trim(); // else default ""
@@ -64,7 +60,6 @@ exports.create = async (req, res, next) => {
     }
 };
 
-// GET /api/resource (private, required by final) - only my resources
 exports.getMy = async (req, res, next) => {
     try {
         const ownerId = req.user?.id;
@@ -78,7 +73,6 @@ exports.getMy = async (req, res, next) => {
     }
 };
 
-// GET /api/resource/club/:slug (private bonus) - club feed for joined users
 exports.getClubFeed = async (req, res, next) => {
     try {
         const ownerId = req.user?.id;
@@ -95,7 +89,6 @@ exports.getClubFeed = async (req, res, next) => {
             return res.status(403).json({ message: "Forbidden: join the club first" });
         }
 
-        // feed shows ALL resources in this club (but only for joined users)
         const resources = await Resource.find({ clubSlug: slug })
             .sort({ createdAt: -1 })
             .lean();
@@ -106,7 +99,6 @@ exports.getClubFeed = async (req, res, next) => {
     }
 };
 
-// GET /api/resource/:id (private, required by final)
 exports.getById = async (req, res, next) => {
     try {
         const ownerId = req.user?.id;
@@ -137,7 +129,6 @@ exports.getById = async (req, res, next) => {
     }
 };
 
-// PUT /api/resource/:id (private, required by final)
 exports.update = async (req, res, next) => {
     try {
         const ownerId = req.user?.id;

@@ -1,4 +1,4 @@
-// routes/resourceRoutes.js
+
 const express = require("express");
 const auth = require("../middleware/authMiddleware");
 const validate = require("../middleware/validate");

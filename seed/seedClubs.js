@@ -1,4 +1,3 @@
-// seed/seedClubs.js
 const Club = require("../models/Club");
 
 const DEFAULT_CLUBS = [
@@ -24,7 +23,6 @@ const DEFAULT_CLUBS = [
 
 async function seedClubs() {
     try {
-        // какие клубы уже есть
         const existing = await Club.find(
             { slug: { $in: DEFAULT_CLUBS.map((c) => c.slug) } },
             { slug: 1 }
@@ -42,7 +40,6 @@ async function seedClubs() {
         await Club.insertMany(missing);
         console.log(`Seed: inserted clubs: ${missing.map((c) => c.slug).join(", ")}`);
     } catch (err) {
-        // не ломаем запуск сервера
         console.error("Seed: failed to seed clubs:", err.message);
     }
 }

@@ -1,4 +1,3 @@
-// validators/authSchemas.js
 const Joi = require("joi");
 
 const registerSchema = Joi.object({

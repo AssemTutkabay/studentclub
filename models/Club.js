@@ -1,4 +1,3 @@
-// models/Club.js
 const mongoose = require("mongoose");
 
 const CLUB_SLUGS = ["sports", "debate", "music"];
